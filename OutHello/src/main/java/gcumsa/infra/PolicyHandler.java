@@ -21,17 +21,4 @@ public class PolicyHandler {
 
     @StreamListener(KafkaProcessor.INPUT)
     public void whatever(@Payload String eventString) {}
-
-    @StreamListener(
-        value = KafkaProcessor.INPUT,
-        condition = "headers['type']=='Hellod'"
-    )
-    public void wheneverHellod_Helloworld(@Payload Hellod hellod) {
-        Hellod event = hellod;
-        System.out.println(
-            "\n\n##### listener Helloworld : " + hellod + "\n\n"
-        );
-        // Sample Logic //
-
-    }
 }
