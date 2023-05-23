@@ -1,0 +1,66 @@
+server:
+  port: 8088
+
+---
+
+spring:
+  profiles: default
+  cloud:
+    gateway:
+      routes:
+        - id: InHello
+          uri: http://localhost:8081
+          predicates:
+            - Path=/hellos/**, 
+        - id: OutHello
+          uri: http://localhost:8082
+          predicates:
+            - Path=/worlds/**, 
+        - id: frontend
+          uri: http://localhost:8080
+          predicates:
+            - Path=/**
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "*"
+            allowedMethods:
+              - "*"
+            allowedHeaders:
+              - "*"
+            allowCredentials: true
+
+
+---
+
+spring:
+  profiles: docker
+  cloud:
+    gateway:
+      routes:
+        - id: InHello
+          uri: http://inHello:8080
+          predicates:
+            - Path=/hellos/**, 
+        - id: OutHello
+          uri: http://outHello:8080
+          predicates:
+            - Path=/worlds/**, 
+        - id: frontend
+          uri: http://frontend:8080
+          predicates:
+            - Path=/**
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "*"
+            allowedMethods:
+              - "*"
+            allowedHeaders:
+              - "*"
+            allowCredentials: true
+
+server:
+  port: 8080
